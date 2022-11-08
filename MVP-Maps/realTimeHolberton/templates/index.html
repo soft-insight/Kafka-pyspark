@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+        integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+        crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+        crossorigin=""></script>
+    <title>Bogotá: 2600 mts closer to the stars</title>
+</head>
+<body>
+    <h1>Bogotá: Bus Lines</h1>
+    <div id="map" style="width: 900px; height: 580px"></div>
+    
+    <script>
+        var map = L.map('map').setView([4.65, -74.08], 13);
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var marker = L.marker([4.65, -74.08]).addTo(map);
+
+        var popup = L.popup()
+            .setLatLng([4.65, -74.08])
+            .setContent("Bogotá: 2600 meters closer to the stars.")
+            .openOn(map);
+
+        mapMarkers1 = [];
+        mapMarkers2 = [];
+        mapMarkers3 = [];
+        
+        var source = new EventSource('/topic/geodatafinal');
+        source.addEventListener('message', function(e){
+
+            console.log('Message');
+            obj = JSON.parse(e.data);
+            console.log(obj);
+
+            if(obj.busline == '00001'){
+                for (var i = 0; i < mapMarkers1.length; i++){
+                    map.removeLayer(mapMarkers1[i]);
+                }
+                marker1 = L.marker([obj.latitude, obj.longitude]).addTo(map);
+                mapMarkers1.push(marker1);
+            }
+
+            if(obj.busline == '00002'){
+                for (var i = 0; i < mapMarkers2.length; i++){
+                    map.removeLayer(mapMarkers2[i]);
+                }
+                marker2 = L.marker([obj.latitude, obj.longitude]).addTo(map);
+                mapMarkers2.push(marker2);
+            }
+
+            if(obj.busline == '00003'){
+                for (var i = 0; i < mapMarkers3.length; i++){
+                    map.removeLayer(mapMarkers3[i]);
+                }
+                marker3 = L.marker([obj.latitude, obj.longitude]).addTo(map);
+                mapMarkers3.push(marker3);
+            }
+        }, false)
+    </script>
+</body>
+</html>
