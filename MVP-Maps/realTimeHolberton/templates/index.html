@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> QUERY Real-time e-commerce & Big Data analysis</title>
+    <link rel="shorcut icon" href="{{ url_for('static', filename='img/logo.png') }}">
+    <link rel="stylesheet" type="text/css "href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
         integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
         crossorigin=""/>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
         crossorigin=""></script>
-    <title>Bogotá: 2600 mts closer to the stars</title>
 </head>
 <body>
-    <h1>Bogotá: Bus Lines</h1>
-    <div id="map" style="width: 900px; height: 580px"></div>
-    
+    <div class="container">
+        <div class="navbar">
+            <img class="logo"src="{{ url_for('static', filename='img/logo.png') }}">
+            <h1 class="name"><p>QUERY</br></p></h1>
+            <nav>
+                <ul>
+                    <li><a href="">history</a></li>
+                    <li><a href="">contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <h1 class="second_title"><p>Visualize<br>data in real time</br></p></h1>
+    <div class="cont_map">
+        <select class="select" name="select_location" id="select_location">
+            <option class="option" value="-1">Choose a location</option>
+            <option class="option" value="37.97166778993645, 23.72575352734794">Atenas</option>
+            <option class="option" value="3.5505702574816858, -73.30205867918419">Colombia</option>
+        </select>
+        <h1 class="map_title">Bogotá: Bus Lines</h1>
+        <div id="map"></div>
+        </div>
     <script>
         var map = L.map('map').setView([4.65, -74.08], 13);
         
@@ -29,7 +49,7 @@
 
         var popup = L.popup()
             .setLatLng([4.65, -74.08])
-            .setContent("Bogotá: 2600 meters closer to the stars.")
+            .setContent("Bogotá: Bus Lines.")
             .openOn(map);
 
         mapMarkers1 = [];
